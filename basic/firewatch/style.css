@@ -1,0 +1,32 @@
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 34px;
+  background-color: #04120c;
+  color: #b8e1ee;
+}
+
+.button-in-header {
+  padding: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  height: 34px;
+  box-sizing: border-box;
+}
+
+.button-in-header:hover {
+  background-color: #127374;
+}
+
+#right-buttons {
+  display: flex;
+}
+
+#active-menu {
+  background-color: #013a3b;
+}
+
+#main-image {
+  min-width: 1000px;
+}
