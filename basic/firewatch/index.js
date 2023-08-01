@@ -44,3 +44,13 @@ document.querySelectorAll("#right-buttons .button-in-header").forEach((v) => {
     v.setAttribute("id", "active-menu");
   });
 });
+
+const link = document.querySelector(`a[href="#document-title"]`);
+
+link.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  document.querySelector("#document-title").scrollIntoView({
+    behavior: "smooth",
+  });
+});
