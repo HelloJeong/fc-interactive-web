@@ -40,3 +40,7 @@ animation-timing-function: cubic-bezier(0.35, 0.28, 0.82, 0.87);
 - transform 효과를 주고자 하는 부모 요소에 적용
 - 값이 클수록(거리가 멀수록) 변형 효과가 적음
 - 값이 작을수록(거리가 가까울수록) 변형 효과가 큼
+
+### layer transform
+
+- 스크롤의 속도와 비슷하면 덜 움직이는 것처럼 보임
