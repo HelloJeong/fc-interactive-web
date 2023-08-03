@@ -1,0 +1,93 @@
+body {
+  background-color: #111;
+}
+
+#main-img-wrapper {
+  text-align: center;
+  padding-top: 139px;
+}
+
+#intro-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  width: 300px;
+  margin: 54px auto 140px;
+
+  color: #fff;
+  font-size: 40px;
+  font-weight: 500;
+}
+
+#intro-main p {
+  text-align: center;
+}
+
+#join-us-text {
+  margin-top: 74px;
+  opacity: 0.6;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+#down-arrow-icon {
+  width: 33px;
+  animation: upAndDown 1s infinite;
+}
+
+@keyframes upAndDown {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+#list-item-wrapper {
+  width: 383px;
+  margin: 0 auto;
+}
+
+.list-item {
+  display: inline;
+  font-size: 48px;
+  font-weight: 600;
+}
+
+.list-item::before {
+  display: inline-block;
+  background-image: url("./imgs/icons/dark_house.png");
+  background-size: 51px 53px;
+  content: "";
+  width: 51px;
+  height: 53px;
+}
+
+.list-item#on {
+  color: #fff;
+}
+
+.list-item#on::before {
+  background-image: url("./imgs/icons/light_house.png");
+}
+
+#panel1-img {
+  position: relative;
+  height: 330px;
+  overflow: hidden;
+  margin-bottom: 300px;
+}
+
+#flying-santa-image {
+  position: absolute;
+  right: -60px;
+  height: 340px;
+  transform: translate(80px, -13px) rotate(23deg);
+}
