@@ -16,7 +16,13 @@ const mountain5 = document.getElementById("mountain5");
 const mountain6 = document.getElementById("mountain6");
 const mountain7 = document.getElementById("mountain7");
 
+let clientWidth = document.documentElement.clientWidth;
+
 window.addEventListener("scroll", () => {
+  if (clientWidth <= 800) {
+    return;
+  }
+
   const scrollY = window.scrollY;
   sun.style.transform = `translateY(${scrollY * 1.05}px)`;
 
@@ -53,4 +59,28 @@ link.addEventListener("click", (e) => {
   document.querySelector("#document-title").scrollIntoView({
     behavior: "smooth",
   });
+});
+
+window.addEventListener("resize", (e) => {
+  clientWidth = document.documentElement.clientWidth;
+
+  if (clientWidth <= 800) {
+    sun.style.transform = `translateY(0)`;
+
+    grayCloud.style.transform = `translateX(0)`;
+    whiteCloud.style.transform = `translateX(0)`;
+
+    bird1.style.transform = `translateX(0)`;
+    bird2.style.transform = `translateX(0)`;
+    bird3.style.transform = `translateX(0)`;
+
+    mountain0.style.transform = `translateY(0)`;
+    mountain1.style.transform = `translateY(0)`;
+    mountain2.style.transform = `translateY(0)`;
+    mountain3.style.transform = `translateY(0)`;
+    mountain4.style.transform = `translateY(0)`;
+    mountain5.style.transform = `translateY(0)`;
+    mountain6.style.transform = `translateY(0)`;
+    mountain7.style.transform = `translateY(0)`;
+  }
 });
