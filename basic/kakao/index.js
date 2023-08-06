@@ -5,6 +5,45 @@ const listItems = document.querySelectorAll(".list-item");
 const panel1Img = document.getElementById("panel1-img");
 const flyingSantaImage = document.getElementById("flying-santa-image");
 
+const videoPlayBack = 500;
+
+const videoElement = document.getElementById("video");
+const videoSection = document.getElementById("video-section");
+
+const fixedWrapper = document.getElementById("fixed-wrapper");
+
+const fixedDescription = document.getElementById("fixed-description");
+
+function centerElement(elementId, video) {
+  const element = document.getElementById(elementId);
+  const parent = element.parentElement;
+
+  if (
+    window.scrollY >
+    parent.offsetTop - (document.documentElement.clientHeight - element.offsetHeight) / 2
+  ) {
+    element.style.position = "fixed";
+    element.style.top = "50%";
+    element.style.left = "50%";
+    element.style.transform = `translate(-50%, -50%)`;
+
+    if (video) video.currentTime = (window.scrollY - videoSection.offsetTop) / videoPlayBack;
+  } else {
+    element.style.position = "relative";
+    element.style.top = "initial";
+    element.style.left = "initial";
+    element.style.transform = "initial";
+  }
+}
+
+videoElement.addEventListener("loadedmetadata", () => {
+  document.getElementById("video-section").style.height =
+    videoElement.duration * videoPlayBack + "px";
+});
+
+const fixedDescriptionAppearTiming = 3470;
+const fixedDescriptionAppearEnds = 3800;
+
 window.addEventListener("scroll", () => {
   const clientHeight = document.documentElement.clientHeight;
   const listStyleChangeStartY = listWrapper.offsetTop;
@@ -39,5 +78,39 @@ window.addEventListener("scroll", () => {
     const rotationDegree =
       23 - (23 * speed * (scrollYBottom - panel1Img.offsetTop)) / divisionValue;
     flyingSantaImage.style.transform = `translate(${translateX}px, ${translateY}px) rotate(${rotationDegree}deg)`;
+  }
+
+  centerElement("fixed-wrapper", videoElement);
+
+  if (
+    window.scrollY >
+    videoSection.offsetTop +
+      videoSection.offsetHeight -
+      (fixedWrapper.offsetHeight +
+        (document.documentElement.clientHeight - fixedWrapper.offsetHeight) / 2)
+  ) {
+    fixedWrapper.style.position = "relative";
+    fixedWrapper.style.top = "initial";
+    fixedWrapper.style.left = "initial";
+    fixedWrapper.style.transform = `translateY(${
+      videoSection.offsetHeight - fixedWrapper.offsetHeight
+    }px)`;
+  }
+
+  if (
+    window.scrollY > fixedDescriptionAppearTiming &&
+    window.scrollY < fixedDescriptionAppearEnds
+  ) {
+    fixedDescription.style.transform = `translateY(${
+      fixedDescriptionAppearEnds - window.scrollY
+    }px)`;
+
+    fixedDescription.style.opacity = (window.scrollY - fixedDescriptionAppearTiming) / 300;
+  } else if (window.scrollY > fixedDescriptionAppearEnds) {
+    fixedDescription.style.transform = `translateY(0px)`;
+    fixedDescription.style.opacity = 1;
+  } else {
+    fixedDescription.style.transform = `translateY(100px)`;
+    fixedDescription.style.opacity = 0;
   }
 });

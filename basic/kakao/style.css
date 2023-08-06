@@ -91,3 +91,25 @@ body {
   height: 340px;
   transform: translate(80px, -13px) rotate(23deg);
 }
+
+#video-section {
+  margin-bottom: 1000px;
+}
+
+#video {
+  display: block;
+  margin: 0 auto;
+  height: 350px;
+}
+
+#fixed-description {
+  width: 622px;
+  margin: 30px auto 0;
+  color: white;
+  text-align: right;
+  line-height: 50px;
+  font-size: 35px;
+  font-weight: 600;
+  transform: translateY(100px);
+  opacity: 0;
+}
