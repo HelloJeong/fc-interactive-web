@@ -113,4 +113,40 @@ window.addEventListener("scroll", () => {
     fixedDescription.style.transform = `translateY(100px)`;
     fixedDescription.style.opacity = 0;
   }
+
+  centerElement("bank-beyond");
+});
+
+let currentImage = 0;
+
+const sliderImages = document.querySelectorAll(".slider-image");
+
+const sliderIndex = document.getElementById("slider-index");
+
+const handleSlideChange = (step) => {
+  currentImage += step;
+
+  if (currentImage < 0) {
+    currentImage = sliderImages.length - 1;
+  } else if (currentImage >= sliderImages.length) {
+    currentImage = 0;
+  }
+
+  sliderContentWrapper.scrollLeft = sliderImages[currentImage].offsetLeft;
+};
+
+document.getElementById("left-button").addEventListener("click", () => {
+  handleSlideChange(-1);
+});
+document.getElementById("right-button").addEventListener("click", () => {
+  handleSlideChange(1);
+});
+
+const sliderContentWrapper = document.getElementById("slider-content-wrapper");
+
+sliderContentWrapper.addEventListener("scroll", () => {
+  const imageWidth = document.querySelectorAll(".slider-image")[0].offsetWidth;
+
+  currentImage = Math.round(sliderContentWrapper.scrollLeft / imageWidth);
+  sliderIndex.innerText = `${currentImage + 1}/${sliderImages.length}`;
 });

@@ -58,3 +58,17 @@ const viewportWidth = document.documentElement.clientWidth;
 - document.documentElement : 웹 페이지의 root 요소(보통 \<html\>)
 
 - document.documentElement.clientWidth : 웹 페이지 root 요소의 너비, 즉 HTML 문서의 너비(border, margin, scrollbar 너비 제외)
+
+### scroll-snap-type
+
+- 특정 포인트에 스크롤을 멈추게 할 때 사용
+- `none` : 무시
+- `x mandatory` : 수평 방향으로
+- `y proximity` : 수직 방향으로
+
+### scroll-snap-align
+
+- 박스의 snap의 기준이 될 위치
+- `start`
+- `end`
+- `center`
