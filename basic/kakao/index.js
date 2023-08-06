@@ -18,10 +18,7 @@ function centerElement(elementId, video) {
   const element = document.getElementById(elementId);
   const parent = element.parentElement;
 
-  if (
-    window.scrollY >
-    parent.offsetTop - (document.documentElement.clientHeight - element.offsetHeight) / 2
-  ) {
+  if (window.scrollY > parent.offsetTop - (document.documentElement.clientHeight - element.offsetHeight) / 2) {
     element.style.position = "fixed";
     element.style.top = "50%";
     element.style.left = "50%";
@@ -37,8 +34,7 @@ function centerElement(elementId, video) {
 }
 
 videoElement.addEventListener("loadedmetadata", () => {
-  document.getElementById("video-section").style.height =
-    videoElement.duration * videoPlayBack + "px";
+  document.getElementById("video-section").style.height = videoElement.duration * videoPlayBack + "px";
 });
 
 const fixedDescriptionAppearTiming = 3470;
@@ -67,43 +63,26 @@ window.addEventListener("scroll", () => {
 
   const scrollYBottom = window.scrollY + clientHeight;
   // console.log("scrollYBottom", scrollYBottom);
-  if (
-    scrollYBottom > panel1Img.offsetTop &&
-    scrollYBottom < panel1Img.offsetTop + panel1Img.offsetHeight + 100
-  ) {
+  if (scrollYBottom > panel1Img.offsetTop && scrollYBottom < panel1Img.offsetTop + panel1Img.offsetHeight + 100) {
     const speed = 1.7;
     const divisionValue = panel1Img.offsetHeight + 100;
     const translateX = 80 - (80 * (scrollYBottom - panel1Img.offsetTop)) / divisionValue;
     const translateY = -13 + (13 * (scrollYBottom - panel1Img.offsetTop)) / divisionValue;
-    const rotationDegree =
-      23 - (23 * speed * (scrollYBottom - panel1Img.offsetTop)) / divisionValue;
+    const rotationDegree = 23 - (23 * speed * (scrollYBottom - panel1Img.offsetTop)) / divisionValue;
     flyingSantaImage.style.transform = `translate(${translateX}px, ${translateY}px) rotate(${rotationDegree}deg)`;
   }
 
   centerElement("fixed-wrapper", videoElement);
 
-  if (
-    window.scrollY >
-    videoSection.offsetTop +
-      videoSection.offsetHeight -
-      (fixedWrapper.offsetHeight +
-        (document.documentElement.clientHeight - fixedWrapper.offsetHeight) / 2)
-  ) {
+  if (window.scrollY > videoSection.offsetTop + videoSection.offsetHeight - (fixedWrapper.offsetHeight + (document.documentElement.clientHeight - fixedWrapper.offsetHeight) / 2)) {
     fixedWrapper.style.position = "relative";
     fixedWrapper.style.top = "initial";
     fixedWrapper.style.left = "initial";
-    fixedWrapper.style.transform = `translateY(${
-      videoSection.offsetHeight - fixedWrapper.offsetHeight
-    }px)`;
+    fixedWrapper.style.transform = `translateY(${videoSection.offsetHeight - fixedWrapper.offsetHeight}px)`;
   }
 
-  if (
-    window.scrollY > fixedDescriptionAppearTiming &&
-    window.scrollY < fixedDescriptionAppearEnds
-  ) {
-    fixedDescription.style.transform = `translateY(${
-      fixedDescriptionAppearEnds - window.scrollY
-    }px)`;
+  if (window.scrollY > fixedDescriptionAppearTiming && window.scrollY < fixedDescriptionAppearEnds) {
+    fixedDescription.style.transform = `translateY(${fixedDescriptionAppearEnds - window.scrollY}px)`;
 
     fixedDescription.style.opacity = (window.scrollY - fixedDescriptionAppearTiming) / 300;
   } else if (window.scrollY > fixedDescriptionAppearEnds) {
