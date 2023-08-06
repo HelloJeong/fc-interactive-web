@@ -72,3 +72,8 @@ const viewportWidth = document.documentElement.clientWidth;
 - `start`
 - `end`
 - `center`
+
+### IntersectionObserver
+
+- 요소가 유저의 뷰포트에 들어왔는지, 숨겨졌는지 탐지
+- 지연 로딩 이미지, 애니메이션 발동, 유저의 활동 추적 등에 용이

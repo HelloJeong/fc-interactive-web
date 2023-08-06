@@ -53,6 +53,7 @@ function setPreloaderStyle(scale) {
 const header = document.querySelector(".header");
 
 preloaderBtn.addEventListener("mousedown", () => {
+  clearInterval(intervalId);
   intervalId = setInterval(() => {
     scale += 0.175;
 
@@ -61,8 +62,12 @@ preloaderBtn.addEventListener("mousedown", () => {
     if (scale >= 1 + preloaderHideThreshold) {
       document.querySelector(".preloader").classList.add("hidden-area");
 
+      const poster = document.querySelector(".poster");
       header.classList.remove("hidden-area");
+      poster.classList.remove("hidden-area");
+
       header.classList.add("shown-area");
+      poster.classList.add("shown-area");
 
       clearInterval(intervalId);
     }
@@ -96,4 +101,29 @@ header.addEventListener("mousemove", (e) => {
   document.querySelector("#cube__image_2").style.transform = `translate(${xRelativeToHeader * -8}px, ${yRelativeToHeader * -8}px)`;
   document.querySelector("#cube__image_3").style.transform = `translate(${xRelativeToHeader * -20}px, ${yRelativeToHeader * -20}px)`;
   document.querySelector("#cube__image_4").style.transform = `translate(${xRelativeToHeader * 5}px, ${yRelativeToHeader * 5}px)`;
+});
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("poster-image_state_visible");
+      }
+    });
+  },
+  { threshold: 0.2 }
+);
+
+document.querySelectorAll(".poster-image_wrapper").forEach((poster) => {
+  observer.observe(poster);
+});
+
+const posterParallax = document.querySelector(".poster__parallax");
+
+posterParallax.addEventListener("mousemove", (e) => {
+  const xRelativeToPosterParallax = e.clientX / posterParallax.clientWidth;
+  const yRelativeToPosterParallax = e.clientY / posterParallax.clientHeight;
+
+  document.querySelector("#poster-image_wrapper_2").style.transform = `translate(${xRelativeToPosterParallax * -40}px, ${yRelativeToPosterParallax * -40}px)`;
+  document.querySelector("#poster-image_wrapper_3").style.transform = `translate(${xRelativeToPosterParallax * 40}px, ${yRelativeToPosterParallax * 40}px)`;
 });
