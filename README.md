@@ -118,3 +118,9 @@ canvas 고유의 크기가 100x100인데 css를 통해 3배 확대가 되었기 
 
 - 현재 모니터의 주사율에 맞춰서 프레임이 나온다.
 - 이 말은 프레임당 x를 1px 이동시킨다면, 144Hz 모니터는 144픽셀을 이동하게 되고 60Hz 모니터는 60픽셀을 이동하게 됨
+
+### GOOEY Effect
+
+- blur와 contrast를 이용해서 구현
+
+### svg filter [참고](https://yoksel.github.io/svg-filters/#/)

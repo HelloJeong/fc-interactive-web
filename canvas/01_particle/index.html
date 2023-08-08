@@ -13,12 +13,27 @@
         overflow: hidden;
       }
       canvas {
-        background-color: white;
+        filter: url("#gooey");
+        /* 아래처럼하면 색상이 변경이 되기 때문에 svg filter를 사용한다 */
+        /* filter: blur(50px) contrast(50);
+        background-color: #000; */
       }
     </style>
   </head>
   <body>
     <canvas></canvas>
+    <svg>
+      <defs>
+        <filter id="gooey">
+          <!-- 보통 필터를 정의하는 태그는 앞에 fe를 붙임 -->
+          <!-- stdDeviation 값 두 개를 넣으면 (가로blur값 세로blur값) -->
+          <feGaussianBlur stdDeviation="40" in="SourceGraphic" result="blur1" />
+          <!-- blu1에 적용시켜줌 -->
+          <!-- mode = matrix, 기본값은 5x4짜리 배열임 -->
+          <feColorMatrix in="blur1" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 100 -23" />
+        </filter>
+      </defs>
+    </svg>
     <script type="module" src="./index.js"></script>
   </body>
 </html>
