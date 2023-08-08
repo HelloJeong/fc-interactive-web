@@ -124,3 +124,7 @@ canvas 고유의 크기가 100x100인데 css를 통해 3배 확대가 되었기 
 - blur와 contrast를 이용해서 구현
 
 ### svg filter [참고](https://yoksel.github.io/svg-filters/#/)
+
+### dat.gui
+
+- 위의 svg filter의 불편한 점을 개선
