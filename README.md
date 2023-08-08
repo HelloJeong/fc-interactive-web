@@ -59,6 +59,8 @@ const viewportWidth = document.documentElement.clientWidth;
 
 - document.documentElement.clientWidth : 웹 페이지 root 요소의 너비, 즉 HTML 문서의 너비(border, margin, scrollbar 너비 제외)
 
+## kakao
+
 ### scroll-snap-type
 
 - 특정 포인트에 스크롤을 멈추게 할 때 사용
@@ -73,7 +75,41 @@ const viewportWidth = document.documentElement.clientWidth;
 - `end`
 - `center`
 
+## next-level-fairs
+
 ### IntersectionObserver
 
 - 요소가 유저의 뷰포트에 들어왔는지, 숨겨졌는지 탐지
 - 지연 로딩 이미지, 애니메이션 발동, 유저의 활동 추적 등에 용이
+
+# canvas
+
+## canvas 기초
+
+### canvas size 조절 방식
+
+1. css를 수정해서 canvas size 조절
+1. canvas tag의 width와 height 속성(canvas의 고유 크기라고 생각하면 됨)
+
+```js
+canvas.style.width = "300px";
+canvas.style.height = "300px";
+
+canvas.width = 100;
+canvas.height = 100;
+
+ctx.fillRect(10, 10, 50, 50);
+```
+
+canvas 고유의 크기가 100x100인데 css를 통해 3배 확대가 되었기 때문에 pixel이 깨지게 됨
+
+### window.devicePixelRatio
+
+<img src="./imgs/dpr.png" width="300" style="background:#fff;"/><br />
+
+- DPR이 높을수록 더 선명한 그래픽을 보여주게 됨.
+- DPR=2라면, 1개의 CSS 픽셀을 4개의 물리적 픽셀이 표현하니 훨씬 선명하게 보이는 것이다.
+- 1px을 4개의 물리적 픽셀로 표현 할 수 있으니 0.5px 선 같은 것도 표현할 수 있다.
+- dpr로 인해 canvas의 width와 height이 변화가 일어나게 됨(이를 scale로 맞춰줌)
+
+## 파티클
