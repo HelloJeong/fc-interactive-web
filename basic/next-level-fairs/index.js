@@ -1,13 +1,44 @@
-document.addEventListener("mousemove", (e) => {
-  const cursorDefaultInner = document.querySelector(".cursor__default__inner");
-  const cursorTraceInner = document.querySelector(".cursor__trace__inner");
-  const { clientX, clientY } = e;
-  cursorDefaultInner.style.top = clientY + "px";
-  cursorDefaultInner.style.left = clientX + "px";
+const cursorDefaultInner = document.querySelector(".cursor__default__inner");
+const cursorTraceInner = document.querySelector(".cursor__trace__inner");
 
-  cursorTraceInner.style.top = clientY + "px";
-  cursorTraceInner.style.left = clientX + "px";
+let mouseX = 0,
+  mouseY = 0;
+
+const MouseMoveListener = (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+};
+
+const interval = 1000 / 60; // target => 60fps
+let now, delta;
+let then = Date.now();
+
+const firstPageMouseAnimate = () => {
+  window.requestAnimationFrame(firstPageMouseAnimate);
+
+  now = Date.now(); // 현재 call된 시간
+  delta = now - then; // 차이값
+
+  if (delta < interval) {
+    // 내가 요구하는 fps에 적합하지 않음
+    return;
+  }
+
+  // 적합하기 때문에 animation 작업 해주면 됨
+
+  cursorDefaultInner.style.top = mouseY + "px";
+  cursorDefaultInner.style.left = mouseX + "px";
+
+  cursorTraceInner.style.top = mouseY + "px";
+  cursorTraceInner.style.left = mouseX + "px";
+
+  then = now - (delta % interval); // then을 바꿔줌(다음 프레임)
+};
+
+window.addEventListener("load", () => {
+  firstPageMouseAnimate();
 });
+document.addEventListener("mousemove", MouseMoveListener);
 
 const cursor = document.querySelector(".cursor");
 
@@ -68,7 +99,7 @@ preloaderBtn.addEventListener("mousedown", () => {
 
       header.classList.add("shown-area");
       poster.classList.add("shown-area");
-
+      headerAnimate();
       clearInterval(intervalId);
     }
   }, 10);
@@ -87,9 +118,28 @@ preloaderBtn.addEventListener("mouseup", () => {
   }, 10);
 });
 
-header.addEventListener("mousemove", (e) => {
-  const xRelativeToHeader = e.clientX / header.clientWidth;
-  const yRelativeToHeader = e.clientY / header.clientHeight;
+let xRelativeToHeader, yRelativeToHeader;
+
+const HeaderMouseMoveListener = (e) => {
+  xRelativeToHeader = e.clientX / header.clientWidth;
+  yRelativeToHeader = e.clientY / header.clientHeight;
+};
+
+header.addEventListener("mousemove", HeaderMouseMoveListener);
+
+let headerAnimateNow, headerAnimateDelta;
+let headerAnimateThen = Date.now();
+
+const headerAnimate = () => {
+  window.requestAnimationFrame(headerAnimate);
+
+  headerAnimateNow = Date.now(); // 현재 call된 시간
+  headerAnimateDelta = headerAnimateNow - headerAnimateThen; // 차이값
+
+  if (headerAnimateDelta < interval) {
+    // 내가 요구하는 fps에 적합하지 않음
+    return;
+  }
 
   document.querySelector(".header__title").style.transform = `translate(${xRelativeToHeader * -50}px, ${yRelativeToHeader * -50}px)`;
 
@@ -101,7 +151,9 @@ header.addEventListener("mousemove", (e) => {
   document.querySelector("#cube__image_2").style.transform = `translate(${xRelativeToHeader * -8}px, ${yRelativeToHeader * -8}px)`;
   document.querySelector("#cube__image_3").style.transform = `translate(${xRelativeToHeader * -20}px, ${yRelativeToHeader * -20}px)`;
   document.querySelector("#cube__image_4").style.transform = `translate(${xRelativeToHeader * 5}px, ${yRelativeToHeader * 5}px)`;
-});
+
+  headerAnimateThen = headerAnimateNow - (headerAnimateDelta % interval); // then을 바꿔줌(다음 프레임)
+};
 
 const observer = new IntersectionObserver(
   (entries) => {
