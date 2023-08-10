@@ -1,4 +1,4 @@
-import CanvasOption from "./js/CanvasOption";
+import CanvasOption from "./js/CanvasOption.js";
 
 class Canvas extends CanvasOption {
   constructor() {

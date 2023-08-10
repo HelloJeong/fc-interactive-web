@@ -128,3 +128,9 @@ canvas 고유의 크기가 100x100인데 css를 통해 3배 확대가 되었기 
 ### dat.gui
 
 - 위의 svg filter의 불편한 점을 개선
+
+## 폭죽
+
+### Performance Monitor
+
+- 개발자도구 -> ... -> more tools
