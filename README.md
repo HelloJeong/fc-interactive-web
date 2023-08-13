@@ -140,3 +140,7 @@ canvas 고유의 크기가 100x100인데 css를 통해 3배 확대가 되었기 
 - Hue(색상) : 0~360도, 0도는 빨강
 - Saturation(채도) : 색상의 진한 정도 0(무채색) ~ 100%
 - Lightness(명도) : 색상의 밝은 정도 0%(검정) ~ 100%(흰색)
+
+## 팡파레(Confetti)
+
+- npm -> `canvas-confetti`
