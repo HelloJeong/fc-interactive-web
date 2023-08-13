@@ -18,16 +18,16 @@ function init() {
   canvas.height = canvasHeight * dpr;
   ctx.scale(dpr, dpr);
 
-  confetti({
-    x: canvasWidth / 2,
-    y: canvasHeight / 2,
-    count: 10,
-  });
+  // confetti({
+  //   x: canvasWidth / 2,
+  //   y: canvasHeight / 2,
+  //   count: 10,
+  // });
 }
 
-function confetti({ x, y, count, deg, colors }) {
+function confetti({ x, y, count, deg, colors, shapes, spread }) {
   for (let i = 0; i < count; i++) {
-    particles.push(new Particle(x, y, deg, colors));
+    particles.push(new Particle(x, y, deg, colors, shapes, spread));
   }
 }
 
@@ -36,20 +36,73 @@ function render() {
     delta,
     then = Date.now();
 
+  let deg = 0;
+
   const frame = () => {
     requestAnimationFrame(frame);
     now = Date.now();
     delta = now - then;
 
+    deg += 1;
+
     if (delta < interval) return;
 
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+    // confetti({
+    //   x: 0,
+    //   y: 0.5,
+    //   count: 10,
+    //   deg: -50,
+    // });
+
+    // confetti({
+    //   x: 1,
+    //   y: 0.5,
+    //   count: 10,
+    //   deg: -130,
+    // });
+
+    // confetti({
+    //   x: Math.random(),
+    //   y: 0.5,
+    //   count: 5,
+    //   deg: 270,
+    //   spread: 180,
+    // });
+
+    confetti({
+      x: 0.5,
+      y: 0.5,
+      count: 10,
+      deg: 90 + deg,
+      spread: 1,
+    });
+
+    confetti({
+      x: 0.5,
+      y: 0.5,
+      count: 10,
+      deg: 225 + deg,
+      spread: 1,
+    });
+
+    confetti({
+      x: 0.5,
+      y: 0.5,
+      count: 10,
+      deg: 315 + deg,
+      spread: 1,
+    });
 
     for (let i = particles.length - 1; i >= 0; i--) {
       particles[i].update();
       particles[i].draw(ctx);
 
       if (particles[i].opacity < 0) {
+        particles.splice(i, 1);
+      }
+      if (particles[i].y > canvasHeight) {
         particles.splice(i, 1);
       }
     }
@@ -73,6 +126,5 @@ window.addEventListener("click", () => {
     y: 0.5,
     count: 10,
     deg: -50,
-    colors: ["#ff0000"],
   });
 });

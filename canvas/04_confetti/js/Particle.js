@@ -1,8 +1,8 @@
 import { hexToRgb, randomNumBetween } from "./utils.js";
 
 export default class Particle {
-  constructor(x, y, deg = 0, colors) {
-    this.angle = (Math.PI / 180) * randomNumBetween(deg - 30, deg + 30);
+  constructor(x, y, deg = 0, colors, shapes, spread = 30) {
+    this.angle = (Math.PI / 180) * randomNumBetween(deg - spread, deg + spread);
     this.r = randomNumBetween(30, 100);
     this.x = x * innerWidth;
     this.y = y * innerHeight;
@@ -26,6 +26,9 @@ export default class Particle {
 
     this.colors = colors || ["#FF577F", "#FF884B", "#FFD384", "#FFF9B0"];
     this.color = hexToRgb(this.colors[Math.floor(randomNumBetween(0, this.colors.length - 1))]);
+
+    this.shapes = shapes || ["circle", "square"];
+    this.shape = this.shapes[Math.floor(randomNumBetween(0, this.shapes.length))];
   }
   update() {
     this.vy += this.gravity;
@@ -43,6 +46,18 @@ export default class Particle {
 
     this.rotation += this.rotationDelta;
   }
+
+  drawCircle(ctx) {
+    ctx.beginPath();
+    ctx.ellipse(this.x, this.y, Math.abs(this.width * Math.cos((Math.PI / 180) * this.widthDelta)) / 2, Math.abs(this.height * Math.sin((Math.PI / 180) * this.heightDelta)) / 2, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.closePath();
+  }
+
+  drawSquare(ctx) {
+    ctx.fillRect(this.x, this.y, this.width * Math.cos((Math.PI / 180) * this.widthDelta), this.height * Math.sin((Math.PI / 180) * this.heightDelta));
+  }
+
   draw(ctx) {
     ctx.save();
     ctx.translate(this.x + this.width * 1.2, this.y + this.height * 1.2);
@@ -50,7 +65,15 @@ export default class Particle {
     ctx.translate(-this.x - this.width * 1.2, -this.y - this.height * 1.2);
 
     ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.opacity})`;
-    ctx.fillRect(this.x, this.y, this.width * Math.cos((Math.PI / 180) * this.widthDelta), this.height * Math.sin((Math.PI / 180) * this.heightDelta));
+
+    switch (this.shape) {
+      case "square":
+        this.drawSquare(ctx);
+        break;
+      case "circle":
+        this.drawCircle(ctx);
+        break;
+    }
 
     ctx.restore();
   }
