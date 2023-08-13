@@ -1,3 +1,5 @@
+import Background from "./Background.js";
+
 export default class App {
   static canvas = document.querySelector("canvas");
   static ctx = App.canvas.getContext("2d");
@@ -7,6 +9,21 @@ export default class App {
   static height = 768;
 
   constructor() {
+    this.backgrounds = [
+      new Background({
+        img: document.querySelector("#bg3-img"),
+        speed: -1,
+      }),
+      new Background({
+        img: document.querySelector("#bg2-img"),
+        speed: -2,
+      }),
+      new Background({
+        img: document.querySelector("#bg1-img"),
+        speed: -4,
+      }),
+    ];
+
     // bind(this)를 해주지 않으면 this가 window로 바뀌게 됨
     window.addEventListener("resize", this.resize.bind(this));
   }
@@ -34,6 +51,11 @@ export default class App {
       if (delta < App.interval) return;
 
       App.ctx.clearRect(0, 0, App.width, App.height);
+
+      this.backgrounds.forEach((background) => {
+        background.update();
+        background.draw();
+      });
 
       then = now - (delta % App.interval);
     };

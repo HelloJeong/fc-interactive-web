@@ -144,3 +144,8 @@ canvas 고유의 크기가 100x100인데 css를 통해 3배 확대가 되었기 
 ## 팡파레(Confetti)
 
 - npm -> `canvas-confetti`
+
+## minigame
+
+- [game assets 다운 가능 사이트](https://itch.io/)
+- Browse Games -> Assets
