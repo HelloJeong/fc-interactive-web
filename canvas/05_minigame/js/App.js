@@ -1,4 +1,5 @@
 import Background from "./Background.js";
+import Player from "./Player.js";
 import Wall from "./Wall.js";
 
 export default class App {
@@ -26,6 +27,8 @@ export default class App {
     ];
 
     this.walls = [new Wall({ type: "SMALL" })];
+
+    this.player = new Player();
 
     // bind(this)를 해주지 않으면 this가 window로 바뀌게 됨
     window.addEventListener("resize", this.resize.bind(this));
@@ -78,7 +81,17 @@ export default class App {
           wall.generatedNext = true;
           this.walls.push(new Wall({ type: Math.random() > 0.3 ? "SMALL" : "BIG" }));
         }
+
+        // 벽과 플레이어 충돌
+        if (wall.isColliding(this.player.boundingBox)) {
+          this.player.boundingBox.color = `rgba(255,0,0,0.3)`;
+        } else {
+          this.player.boundingBox.color = `rgba(0,0,255,0.3)`;
+        }
       }
+
+      // this.player.update();
+      this.player.draw();
 
       then = now - (delta % App.interval);
     };

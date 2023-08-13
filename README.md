@@ -150,3 +150,17 @@ canvas 고유의 크기가 100x100인데 css를 통해 3배 확대가 되었기 
 - [game assets 다운 가능 사이트](https://itch.io/)
 - Browse Games -> Assets
 - `tiled` : [이동](https://www.mapeditor.org/)
+- bevouliin [참고](https://bevouliin.com) - 라이센스 주의
+
+- 충돌 체크
+
+```js
+isColliding(target) {
+  return (
+    target.x + target.width >= this.x &&
+    target.x <= this.x + this.width &&
+    target.y + target.height >= this.y &&
+    target.y <= this.y + this.height
+  );
+}
+```
