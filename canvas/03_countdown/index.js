@@ -26,7 +26,7 @@ function init() {
 }
 
 function createRing() {
-  const PARTICLE_NUM = 100;
+  const PARTICLE_NUM = 800;
   for (let i = 0; i < PARTICLE_NUM; i++) {
     particles.push(new Particle());
   }
@@ -44,10 +44,24 @@ function render() {
 
     if (delta < interval) return;
 
-    particles.forEach((particle, index) => {
-      particle.update(ctx);
-      particle.draw(ctx);
-    });
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+    // particles.forEach((particle, index) => {
+    //   particle.update(ctx);
+    //   particle.draw(ctx);
+
+    //   if (particle.opacity < 0) {
+    //     // 뒷 요소가 앞으로 땡겨져 오기 때문에 깜빡이는 side effect가 발생함
+    //     particles.splice(index, 1);
+    //   }
+    // });
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      particles[i].update();
+      particles[i].draw(ctx);
+
+      if (particles[i].opacity < 0) particles.splice(i, 1);
+    }
 
     then = now - (delta % interval);
   };
