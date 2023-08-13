@@ -1,4 +1,5 @@
 import Background from "./Background.js";
+import Wall from "./Wall.js";
 
 export default class App {
   static canvas = document.querySelector("canvas");
@@ -23,6 +24,8 @@ export default class App {
         speed: -4,
       }),
     ];
+
+    this.walls = [new Wall({ type: "SMALL" })];
 
     // bind(this)를 해주지 않으면 this가 window로 바뀌게 됨
     window.addEventListener("resize", this.resize.bind(this));
@@ -52,10 +55,30 @@ export default class App {
 
       App.ctx.clearRect(0, 0, App.width, App.height);
 
+      // 배경
       this.backgrounds.forEach((background) => {
         background.update();
         background.draw();
       });
+
+      // 벽
+      for (let i = this.walls.length - 1; i >= 0; i--) {
+        const wall = this.walls[i];
+
+        wall.update();
+        wall.draw();
+
+        // 벽 제거
+        if (wall.isOutside) {
+          this.walls.splice(i, 1);
+          continue;
+        }
+        // 벽 생성
+        if (wall.canGenerateNext) {
+          wall.generatedNext = true;
+          this.walls.push(new Wall({ type: Math.random() > 0.3 ? "SMALL" : "BIG" }));
+        }
+      }
 
       then = now - (delta % App.interval);
     };
