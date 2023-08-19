@@ -33,6 +33,8 @@ export default class Wall {
 
     this.boundingBox1 = new BoundingBox(this.x + 30, this.y1 + 30, this.width - 60, this.height - 60);
     this.boundingBox2 = new BoundingBox(this.x + 30, this.y2 + 30, this.width - 60, this.height - 60);
+
+    this.vx = -6;
   }
   get isOutside() {
     return this.x + this.width < 0;
@@ -46,14 +48,14 @@ export default class Wall {
   }
 
   update() {
-    this.x += -6;
+    this.x += this.vx;
     this.boundingBox1.x = this.boundingBox2.x = this.x + 30;
   }
   draw() {
     App.ctx.drawImage(this.img, this.sx, 0, this.img.width * this.sizeX, this.img.height, this.x, this.y1, this.width, this.height);
     App.ctx.drawImage(this.img, this.sx, 0, this.img.width * this.sizeX, this.img.height, this.x, this.y2, this.width, this.height);
 
-    this.boundingBox1.draw();
-    this.boundingBox2.draw();
+    // this.boundingBox1.draw();
+    // this.boundingBox2.draw();
   }
 }

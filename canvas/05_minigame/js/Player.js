@@ -32,6 +32,6 @@ export default class Player {
   }
   draw() {
     App.ctx.drawImage(this.img, (this.img.width / 15) * this.frameX, 0, this.img.width / 15, this.img.height, this.x, this.y, this.width, this.height);
-    this.boundingBox.draw();
+    // this.boundingBox.draw();
   }
 }

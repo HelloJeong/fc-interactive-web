@@ -1,5 +1,8 @@
 import Background from "./Background.js";
+import Coin from "./Coin.js";
+import GameHandler from "./GameHandler.js";
 import Player from "./Player.js";
+import Score from "./Score.js";
 import Wall from "./Wall.js";
 
 export default class App {
@@ -26,23 +29,31 @@ export default class App {
       }),
     ];
 
+    this.gameHandler = new GameHandler(this);
+
+    this.reset();
+
+    // bind(this)를 해주지 않으면 this가 window로 바뀌게 됨
+  }
+
+  reset() {
     this.walls = [new Wall({ type: "SMALL" })];
 
     this.player = new Player();
+    this.coins = [];
 
-    // bind(this)를 해주지 않으면 this가 window로 바뀌게 됨
-    window.addEventListener("resize", this.resize.bind(this));
+    this.score = new Score();
   }
 
-  resize() {
+  init() {
     App.canvas.width = App.width * App.dpr;
     App.canvas.height = App.height * App.dpr;
     App.ctx.scale(App.dpr, App.dpr);
 
-    const width = innerWidth > innerHeight ? innerHeight * 0.9 : innerWidth * 0.9;
-
-    App.canvas.style.width = width + "px";
-    App.canvas.style.height = width * (3 / 4) + "px";
+    // 배경
+    this.backgrounds.forEach((background) => {
+      background.draw();
+    });
   }
 
   render() {
@@ -55,6 +66,10 @@ export default class App {
       delta = now - then;
 
       if (delta < App.interval) return;
+
+      if (this.gameHandler.status !== "PLAYING") {
+        return;
+      }
 
       App.ctx.clearRect(0, 0, App.width, App.height);
 
@@ -79,19 +94,52 @@ export default class App {
         // 벽 생성
         if (wall.canGenerateNext) {
           wall.generatedNext = true;
-          this.walls.push(new Wall({ type: Math.random() > 0.3 ? "SMALL" : "BIG" }));
+          const newWall = new Wall({ type: Math.random() > 0.3 ? "SMALL" : "BIG" });
+          this.walls.push(newWall);
+
+          // 코인 생성
+          if (Math.random() < 0.5) {
+            const x = newWall.x + newWall.width / 2;
+            const y = newWall.y2 - newWall.gapY / 2;
+            this.coins.push(new Coin(x, y, newWall.vx));
+          }
         }
 
         // 벽과 플레이어 충돌
         if (wall.isColliding(this.player.boundingBox)) {
-          this.player.boundingBox.color = `rgba(255,0,0,0.3)`;
-        } else {
-          this.player.boundingBox.color = `rgba(0,0,255,0.3)`;
+          this.gameHandler.status = "FINISHED";
+          break;
         }
       }
 
-      // this.player.update();
+      this.player.update();
       this.player.draw();
+
+      if (this.player.y >= App.height || this.player.y + this.player.height <= 0) {
+        // 벽 넘음
+        this.gameHandler.status = "FINISHED";
+      }
+
+      // 코인
+      for (let i = this.coins.length - 1; i >= 0; i--) {
+        const coin = this.coins[i];
+        coin.update();
+        coin.draw();
+
+        if (coin.x + coin.width < 0) {
+          this.coins.splice(i, 1);
+          continue;
+        }
+
+        if (coin.boundingBox.isColliding(this.player.boundingBox)) {
+          this.coins.splice(i, 1);
+          this.score.coinCount++;
+        }
+      }
+
+      // 점수
+      this.score.update();
+      this.score.draw();
 
       then = now - (delta % App.interval);
     };
