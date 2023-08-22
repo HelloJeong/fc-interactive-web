@@ -164,3 +164,7 @@ isColliding(target) {
   );
 }
 ```
+
+## rope_physics
+
+- blur 효과를 주고 싶을 땐 작은 사이즈의 이미지를 캔버스로 불러와 확대시키면 된다.
