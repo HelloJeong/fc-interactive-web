@@ -168,3 +168,55 @@ isColliding(target) {
 ## rope_physics
 
 - blur 효과를 주고 싶을 땐 작은 사이즈의 이미지를 캔버스로 불러와 확대시키면 된다.
+
+## matter.js ([참고](https://brm.io/matter-js/))
+
+### Engine
+
+- 물리 시뮬레이션 담당
+- Body들의 List들을 관리
+- Body들의 위치, 속도, 충돌 등을 계산
+- gravity, enableSleeping, positionIterations,...
+
+### Render
+
+- Body들의 시각적인 부분을 담당
+- Canvas의 Width, Height, color, ...
+- pixelRatio, showVelocity, show로 시작하는 디버깅 도움툴
+
+### Runner
+
+- Engine, Render의 업데이트 Loop 관리
+- beforeTick, tick, afterTick
+- fps, requestAnimationFrame
+
+### Body
+
+- 단일 물리적 객체(시각적으로 표시 안됨)
+- 한 객체의 position, velocity, force, mass, ...
+- Rope 프로젝트의 Dot 같은 느낌
+
+### Bodies
+
+- 물리값만 가진 Body를 시각적으로 쉽게 표현하기 위한 모듈
+- 원, 사각형, 다각형, SVG Paths 등 쉽게 제작 가능
+
+### Composite
+
+- Composite.add(engine.world, [...body])
+- World에 Body를 추가해주는 역할
+- 또는 Body들을 하나로 묶는 그룹의 역할도 가능
+
+### Mouse
+
+- Canvas 내에서의 포지션 값을 위함
+- 하지만 이 하나로는 Canvas의 Body들과 상호작용은 할 수 없음
+
+### MouseConstraint
+
+- 각 Body들과 상호작용을 할 수 있게 해줌(박스 들기 등)
+- Mouse를 이 MouseConstraint와 연결하여 사용함
+
+### Events
+
+- 말 그대로 Events를 등록
