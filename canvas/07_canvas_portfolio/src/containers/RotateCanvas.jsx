@@ -16,7 +16,9 @@ const RotateCanvas = () => {
     initMouse();
     initGround();
 
-    canvas.addEventListener("click", createBox);
+    canvas.addEventListener("mousewheel", () => {
+      addRect(mouse.position.x, mouse.position.y, 50, 50);
+    });
 
     function initScene() {
       engine = Engine.create();
@@ -45,12 +47,24 @@ const RotateCanvas = () => {
     }
 
     function initGround() {
-      const ground = Bodies.rectangle(cw / 2, ch, cw, 50, { isStatic: true });
-      Composite.add(engine.world, ground);
+      const segments = 32; // 각
+      const deg = (Math.PI * 2) / segments;
+      const width = 50;
+      const radius = cw / 2 + width / 2;
+      const height = radius * Math.tan(deg / 2) * 2;
+
+      for (let i = 0; i < segments; i++) {
+        const theta = deg * i;
+        const x = radius * Math.cos(theta) + cw / 2;
+        const y = radius * Math.sin(theta) + ch / 2;
+
+        // angle 값을 잡아주면 회전하게 됨
+        addRect(x, y, width, height, { isStatic: true, angle: theta });
+      }
     }
-    function createBox() {
-      const box = Bodies.rectangle(mouse.position.x, mouse.position.y, 50, 50);
-      Composite.add(engine.world, box);
+    function addRect(x, y, w, h, options = {}) {
+      const rect = Bodies.rectangle(x, y, w, h, options);
+      Composite.add(engine.world, rect);
     }
   }, []);
 
