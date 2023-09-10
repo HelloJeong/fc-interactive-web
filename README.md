@@ -232,3 +232,9 @@ isColliding(target) {
   - root : observe 대상 가시성 여부를 위한 viewport. (기본값 : 기기의 viewport)
   - rootMargin : viewport의 가시성 검증을 위한 영역을 확대/축소 (css margin 느낌)
   - threshold : 관측 대상의 몇 %가 보였을 때 intersecting 처리를 할 지 결정 (0 ~ 1)
+
+# Three.js - 기초 ([참고](https://threejs.org))
+
+- WebGL([참고](https://developer.mozilla.org/ko/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL))
+
+# Three.js - 심화
