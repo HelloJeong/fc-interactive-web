@@ -237,4 +237,13 @@ isColliding(target) {
 
 - WebGL([참고](https://developer.mozilla.org/ko/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL))
 
+## Three.js의 기본 구성 요소([참고](https://threejs.org/manual/#en/fundamentals))
+
+- Renderer
+- Scene
+- Camera
+- 3D Object
+
+## 3D Cube
+
 # Three.js - 심화
