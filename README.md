@@ -220,3 +220,15 @@ isColliding(target) {
 ### Events
 
 - 말 그대로 Events를 등록
+
+### Bodies.Rectangle options
+
+- chamfer : 다른 객체와의 충돌을 조금 더 완만하게(border-radius 느낌)
+
+### IntersectionObserver
+
+- ( (entries, observer) => {}, options);
+- options
+  - root : observe 대상 가시성 여부를 위한 viewport. (기본값 : 기기의 viewport)
+  - rootMargin : viewport의 가시성 검증을 위한 영역을 확대/축소 (css margin 느낌)
+  - threshold : 관측 대상의 몇 %가 보였을 때 intersecting 처리를 할 지 결정 (0 ~ 1)

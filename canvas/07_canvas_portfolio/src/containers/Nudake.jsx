@@ -14,7 +14,8 @@ const Nudake = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const canvasParent = canvas.parentNode;
-    const ctx = canvas.getContext("2d");
+    // Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true.
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
     const imageSrcs = [image1, image2, image3];
     const loadedImages = [];
