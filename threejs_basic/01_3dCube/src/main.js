@@ -1,10 +1,16 @@
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import GUI from "lil-gui";
 
 window.addEventListener("load", () => {
   init();
 });
 
 function init() {
+  const options = {
+    color: 0x00ffff,
+  };
+
   const renderer = new THREE.WebGLRenderer({
     // alpha: true, // 검정 배경을 없애줌
     antialias: true,
@@ -19,6 +25,25 @@ function init() {
   // 물체에 대한 원근감을 표현할 수 있는 카메라
   // (fov(시야각), 카메라의 종횡비, near(가까이), far(멀리))
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 500);
+
+  const controls = new OrbitControls(camera, renderer.domElement); // 카메라의 궤도를 이동시킬 수 있음
+
+  // const axesHelper = new THREE.AxesHelper(5); // 카메라의 xyz 축을 보여줌
+
+  // scene.add(axesHelper);
+
+  controls.autoRotate = true;
+  // controls.autoRotateSpeed = 30;
+  controls.enableDamping = true; // 드래그를 멈췄을 때 관성
+  // controls.dampingFactor = 0.01; // 관성 힘
+  controls.enableZoom = true; // default true,
+  controls.enablePan = true; // default true, 우클릭으로 좌우 변경
+  // controls.maxDistance = 50; // zoom 최대
+  // controls.minDistance = 10; // zoom 최소
+  // controls.maxPolarAngle = Math.PI / 2; // 수직 방향으로 카메라를 얼마나 옮길 수 있는지
+  // controls.minPolarAngle = Math.PI / 3;
+  // controls.maxAzimuthAngle = Math.PI / 2; // 수평 방향으로 카메라를 얼마나 옮길 수 있는지
+  // controls.minAzimuthAngle = Math.PI / 3;
 
   // const geometry = new THREE.BoxGeometry(2, 2, 2);
   const cubeGeometry = new THREE.IcosahedronGeometry(1);
@@ -89,15 +114,17 @@ function init() {
 
     // cube.rotation.x += clock.getDelta(); // getDelta가 호출되고나서 다음 getDelta가 호출되는 사이 시간
 
-    const elapsedTime = clock.getElapsedTime();
+    // const elapsedTime = clock.getElapsedTime();
 
-    cube.rotation.x = elapsedTime;
-    cube.rotation.y = elapsedTime;
+    // cube.rotation.x = elapsedTime;
+    // cube.rotation.y = elapsedTime;
 
-    skeleton.rotation.x = elapsedTime * 1.5;
-    skeleton.rotation.y = elapsedTime * 1.5;
+    // skeleton.rotation.x = elapsedTime * 1.5;
+    // skeleton.rotation.y = elapsedTime * 1.5;
 
     renderer.render(scene, camera);
+
+    controls.update();
 
     requestAnimationFrame(render);
   }
@@ -111,7 +138,19 @@ function init() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     renderer.render(scene, camera);
+
+    controls.update();
   }
 
   window.addEventListener("resize", handleResize);
+
+  const gui = new GUI();
+  // gui.add(cube.position, "y", -3, 3, 0.1);
+  gui.add(cube.position, "y").min(-3).max(3).step(0.1);
+
+  gui.add(cube, "visible");
+
+  gui.addColor(options, "color").onChange((value) => {
+    cube.material.color.set(value);
+  });
 }
