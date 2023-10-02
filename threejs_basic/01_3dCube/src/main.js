@@ -61,7 +61,26 @@ function init() {
   ambientLight.position.set(3, 2, 1);
   scene.add(ambientLight);
 
-  renderer.render(scene, camera);
+  const clock = new THREE.Clock();
+
+  render();
+
+  function render() {
+    // cube.rotation.x = THREE.MathUtils.degToRad(45); // radian이 들어가야하는데 degToRad 로 deg을 넣어도 됨
+
+    // cube.rotation.x += 0.01;
+    // cube.position.y = Math.sin(cube.rotation.x);
+    // cube.scale.x = Math.cos(cube.rotation.x);
+
+    // cube.rotation.x = Date.now() / 1000;
+    // cube.rotation.x = clock.getElapsedTime(); // clock instance가 생성된 후로부터의 시간
+
+    cube.rotation.x += clock.getDelta(); // getDelta가 호출되고나서 다음 getDelta가 호출되는 사이 시간
+
+    renderer.render(scene, camera);
+
+    requestAnimationFrame(render);
+  }
 
   function handleResize() {
     // 카메라의 종횡비도 같이 변경시켜줘야함
