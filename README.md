@@ -246,4 +246,9 @@ isColliding(target) {
 
 ## 3D Cube
 
+## 3D text
+
+- typeface 형태의 폰트([참고](https://gero3.github.io/facetype.js))
+- 폰트 사이트([참고](https://noonnu.cc/))
+
 # Three.js - 심화
