@@ -250,5 +250,19 @@ isColliding(target) {
 
 - typeface 형태의 폰트([참고](https://gero3.github.io/facetype.js))
 - 폰트 사이트([참고](https://noonnu.cc/))
+- textGeometry를 가운데 정렬하는 방법
+
+  1. ```js
+     textGeometry.computeBoundingBox(); // boundingBox를 계산하라는 작업(안하면 boundingBox가 null값)
+
+     textGeometry.translate(
+      -(textGeometry.boundingBox.max.x - textGeometry.boundingBox.min.x) \* 0.5,
+      -(textGeometry.boundingBox.max.y - textGeometry.boundingBox.min.y) \* 0.5,
+      -(textGeometry.boundingBox.max.z - textGeometry.boundingBox.min.z) \* 0.5);
+     ```
+
+  1. ```js
+     textGeometry.center();
+     ```
 
 # Three.js - 심화
